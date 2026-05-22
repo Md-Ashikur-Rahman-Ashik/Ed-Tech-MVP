@@ -14,7 +14,6 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
 
   async function handleSignup() {
     if (!fullName || !email || !password) {
@@ -42,68 +41,9 @@ export default function SignupPage() {
       setError(error.message);
       setLoading(false);
     } else {
-      setSuccess(true);
-      setLoading(false);
+      router.push("/dashboard");
+      router.refresh();
     }
-  }
-
-  if (success) {
-    return (
-      <div
-        style={{
-          minHeight: "100vh",
-          background: "var(--bg)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "2rem",
-        }}
-      >
-        <div
-          style={{
-            background: "var(--bg-card)",
-            border: "1px solid var(--green)",
-            borderRadius: "16px",
-            padding: "2.5rem",
-            maxWidth: "420px",
-            textAlign: "center",
-          }}
-        >
-          <div style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>✉️</div>
-          <h2
-            style={{
-              fontSize: "1.4rem",
-              fontWeight: 700,
-              marginBottom: "0.75rem",
-            }}
-          >
-            Check your email
-          </h2>
-          <p
-            style={{
-              color: "var(--text-secondary)",
-              fontSize: "0.9rem",
-              marginBottom: "1.5rem",
-            }}
-          >
-            We sent a confirmation link to{" "}
-            <strong style={{ color: "var(--text-primary)" }}>{email}</strong>.
-            Click it to activate your account.
-          </p>
-          <Link
-            href="/login"
-            style={{
-              color: "var(--accent)",
-              textDecoration: "none",
-              fontWeight: 600,
-              fontSize: "0.9rem",
-            }}
-          >
-            Back to Login →
-          </Link>
-        </div>
-      </div>
-    );
   }
 
   return (
