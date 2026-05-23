@@ -77,24 +77,20 @@
 }
 
 @theme {
-  --color-bg: #0f0e0b;
-  --color-card: #1a1915;
-  --color-elevated: #222118;
-  --color-border: #2e2c25;
-  --color-primary: #f0ead6;
-  --color-secondary: #9c9578;
-  --color-muted: #5a5642;
-  --color-accent: #c8922a;
-  --color-green: #4a7c59;
+  --color-bg: #faf9f7;
+  --color-card: #ffffff;
+  --color-elevated: #f3f1ec;
+  --color-border: #e5e0d8;
+  --color-primary: #1a1714;
+  --color-secondary: #5c5347;
+  --color-muted: #9c9488;
+  --color-accent: #b8791a;
+  --color-accent-hover: #9e6614;
+  --color-green: #2d6a4f;
   --color-danger: #c0392b;
 
   --font-display: "Playfair Display", serif;
   --font-body: "DM Sans", sans-serif;
-
-  --animate-in: enter var(--tw-animation-duration, var(--tw-duration, 0.15s))
-    ease var(--tw-animation-delay, 0s) 1 normal none;
-  --animate-out: exit var(--tw-animation-duration, var(--tw-duration, 0.15s))
-    ease var(--tw-animation-delay, 0s) 1 normal none;
 
   @keyframes enter {
     from {
@@ -150,7 +146,7 @@ h4 {
 
 ::selection {
   background: var(--color-accent);
-  color: #000;
+  color: #fff;
 }
 
 ::-webkit-scrollbar {
