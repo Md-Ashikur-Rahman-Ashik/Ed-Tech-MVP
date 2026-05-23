@@ -24,19 +24,14 @@ export default function SignupPage() {
       setError("Password must be at least 6 characters.");
       return;
     }
-
     setLoading(true);
     setError("");
-
     const supabase = createClient();
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: {
-        data: { full_name: fullName, phone },
-      },
+      options: { data: { full_name: fullName, phone } },
     });
-
     if (error) {
       setError(error.message);
       setLoading(false);
@@ -47,68 +42,24 @@ export default function SignupPage() {
   }
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "var(--bg)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "2rem",
-      }}
-    >
-      <div style={{ width: "100%", maxWidth: "420px" }}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            marginBottom: "2.5rem",
-            justifyContent: "center",
-          }}
-        >
-          <BookOpen size={22} color="var(--accent)" />
-          <span
-            style={{
-              fontFamily: "Playfair Display, serif",
-              fontSize: "1.4rem",
-              fontWeight: 700,
-            }}
-          >
+    <div className="min-h-screen bg-bg flex items-center justify-center px-4">
+      <div className="w-full max-w-md">
+        <div className="flex items-center justify-center gap-2 mb-10">
+          <BookOpen size={22} className="text-accent" />
+          <span className="font-display text-2xl font-bold text-primary">
             শিক্ষালয়
           </span>
         </div>
 
-        <div
-          style={{
-            background: "var(--bg-card)",
-            border: "1px solid var(--border)",
-            borderRadius: "16px",
-            padding: "2rem",
-          }}
-        >
-          <h1
-            style={{
-              fontSize: "1.5rem",
-              fontWeight: 700,
-              marginBottom: "0.35rem",
-            }}
-          >
+        <div className="bg-card border border-border rounded-2xl p-8">
+          <h1 className="text-2xl font-display font-bold text-primary mb-1">
             Create account
           </h1>
-          <p
-            style={{
-              color: "var(--text-secondary)",
-              fontSize: "0.9rem",
-              marginBottom: "2rem",
-            }}
-          >
+          <p className="text-secondary text-sm mb-8">
             Join thousands of students learning today
           </p>
 
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
-          >
+          <div className="flex flex-col gap-4">
             {[
               {
                 label: "Full Name *",
@@ -140,15 +91,7 @@ export default function SignupPage() {
               },
             ].map((field) => (
               <div key={field.label}>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: "0.85rem",
-                    fontWeight: 500,
-                    color: "var(--text-secondary)",
-                    marginBottom: "0.4rem",
-                  }}
-                >
+                <label className="block text-sm font-medium text-secondary mb-1.5">
                   {field.label}
                 </label>
                 <input
@@ -156,31 +99,13 @@ export default function SignupPage() {
                   value={field.value}
                   onChange={(e) => field.setter(e.target.value)}
                   placeholder={field.placeholder}
-                  style={{
-                    width: "100%",
-                    background: "var(--bg-elevated)",
-                    border: "1px solid var(--border)",
-                    borderRadius: "8px",
-                    padding: "0.75rem 1rem",
-                    color: "var(--text-primary)",
-                    fontSize: "0.95rem",
-                    outline: "none",
-                  }}
+                  className="w-full bg-elevated border border-border rounded-lg px-4 py-3 text-primary text-sm outline-none focus:border-accent transition-colors placeholder:text-muted"
                 />
               </div>
             ))}
 
             {error && (
-              <div
-                style={{
-                  background: "#c0392b18",
-                  border: "1px solid var(--danger)",
-                  color: "#e74c3c",
-                  padding: "0.75rem 1rem",
-                  borderRadius: "8px",
-                  fontSize: "0.85rem",
-                }}
-              >
+              <div className="bg-danger/10 border border-danger text-danger px-4 py-3 rounded-lg text-sm">
                 {error}
               </div>
             )}
@@ -188,49 +113,18 @@ export default function SignupPage() {
             <button
               onClick={handleSignup}
               disabled={loading}
-              style={{
-                background: loading ? "var(--text-muted)" : "var(--accent)",
-                color: "#000",
-                border: "none",
-                borderRadius: "8px",
-                padding: "0.85rem",
-                fontWeight: 700,
-                fontSize: "1rem",
-                cursor: loading ? "not-allowed" : "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "0.5rem",
-                width: "100%",
-                marginTop: "0.5rem",
-              }}
+              className="w-full bg-accent hover:bg-accent/90 disabled:bg-muted text-black font-bold py-3 rounded-lg text-base flex items-center justify-center gap-2 transition-colors cursor-pointer disabled:cursor-not-allowed mt-2"
             >
-              {loading && (
-                <Loader2
-                  size={16}
-                  style={{ animation: "spin 1s linear infinite" }}
-                />
-              )}
+              {loading && <Loader2 size={16} className="animate-spin" />}
               {loading ? "Creating account..." : "Create Account"}
             </button>
           </div>
 
-          <p
-            style={{
-              textAlign: "center",
-              marginTop: "1.5rem",
-              fontSize: "0.875rem",
-              color: "var(--text-secondary)",
-            }}
-          >
+          <p className="text-center mt-6 text-sm text-secondary">
             Already have an account?{" "}
             <Link
               href="/login"
-              style={{
-                color: "var(--accent)",
-                fontWeight: 600,
-                textDecoration: "none",
-              }}
+              className="text-accent font-semibold hover:underline"
             >
               Sign in
             </Link>
