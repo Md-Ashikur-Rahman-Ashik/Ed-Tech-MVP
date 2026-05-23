@@ -123,7 +123,7 @@ export default async function LandingPage() {
         </div>
 
         {!courses || courses.length === 0 ? (
-          <div className="text-center py-16 text-muted border border-dashed border-border rounded-xl">
+          <div className="text-center py-16 border border-dashed border-border rounded-xl">
             Courses coming soon. Check back shortly.
           </div>
         ) : (
@@ -209,7 +209,7 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      <footer className="border-t border-border py-8 text-center text-muted text-sm">
+      <footer className="border-t border-border py-8 text-center text-sm">
         © {new Date().getFullYear()} শিক্ষালয় · Built for Bangladesh's learners
       </footer>
     </main>
