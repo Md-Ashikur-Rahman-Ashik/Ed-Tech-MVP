@@ -15,369 +15,154 @@ export default async function LandingPage() {
   const { data: courses } = await supabase
     .from("courses")
     .select(
-      `
-      id, title, slug, description, thumbnail_url, price,
-      teachers ( name, photo_url )
-    `,
+      `id, title, slug, description, thumbnail_url, price, teachers ( name, photo_url )`,
     )
     .eq("is_published", true)
     .order("created_at", { ascending: false });
 
   return (
-    <main style={{ background: "var(--bg)", minHeight: "100vh" }}>
-      <nav
-        style={{
-          borderBottom: "1px solid var(--border)",
-          padding: "0 2rem",
-          height: "64px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          position: "sticky",
-          top: 0,
-          background: "var(--bg)",
-          zIndex: 100,
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <BookOpen size={22} color="var(--accent)" />
-          <span
-            style={{
-              fontFamily: "Playfair Display, serif",
-              fontSize: "1.25rem",
-              fontWeight: 700,
-              color: "var(--text-primary)",
-            }}
-          >
+    <main className="bg-bg min-h-screen">
+      <nav className="border-b border-border px-8 h-16 flex items-center justify-between sticky top-0 bg-bg z-50">
+        <div className="flex items-center gap-2">
+          <BookOpen size={22} className="text-accent" />
+          <span className="font-display text-xl font-bold text-primary">
             শিক্ষালয়
           </span>
         </div>
-        <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+        <div className="flex items-center gap-4">
           <Link
             href="/login"
-            style={{
-              color: "var(--text-secondary)",
-              textDecoration: "none",
-              fontSize: "0.9rem",
-              fontWeight: 500,
-            }}
+            className="text-secondary text-sm font-medium hover:text-primary transition-colors"
           >
             Login
           </Link>
           <Link
             href="/signup"
-            style={{
-              background: "var(--accent)",
-              color: "#000",
-              padding: "0.5rem 1.25rem",
-              borderRadius: "6px",
-              textDecoration: "none",
-              fontSize: "0.9rem",
-              fontWeight: 600,
-            }}
+            className="bg-accent text-black px-5 py-2 rounded-lg text-sm font-bold hover:bg-accent/90 transition-colors"
           >
             Get Started
           </Link>
         </div>
       </nav>
 
-      <section
-        style={{
-          maxWidth: "1100px",
-          margin: "0 auto",
-          padding: "6rem 2rem 4rem",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "4rem",
-          alignItems: "center",
-        }}
-      >
+      <section className="max-w-6xl mx-auto px-8 pt-24 pb-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div>
-          <div
-            style={{
-              display: "inline-block",
-              background: "var(--accent-light)",
-              border: "1px solid var(--accent)",
-              color: "var(--accent)",
-              padding: "0.3rem 0.9rem",
-              borderRadius: "100px",
-              fontSize: "0.8rem",
-              fontWeight: 600,
-              letterSpacing: "0.05em",
-              marginBottom: "1.5rem",
-            }}
-          >
+          <div className="inline-block bg-accent/10 border border-accent text-accent px-4 py-1 rounded-full text-xs font-semibold tracking-wide mb-6">
             ✦ 215,000+ Students Trust Us
           </div>
-          <h1
-            style={{
-              fontSize: "clamp(2.5rem, 5vw, 3.5rem)",
-              fontWeight: 900,
-              color: "var(--text-primary)",
-              marginBottom: "1.5rem",
-              lineHeight: 1.1,
-            }}
-          >
+          <h1 className="text-5xl lg:text-6xl font-display font-black text-primary mb-6 leading-none">
             Learn From
-            <span
-              style={{
-                display: "block",
-                color: "var(--accent)",
-              }}
-            >
-              Bangladesh's Best
-            </span>
+            <span className="block text-accent">Bangladesh's Best</span>
             Teachers
           </h1>
-          <p
-            style={{
-              color: "var(--text-secondary)",
-              fontSize: "1.1rem",
-              marginBottom: "2.5rem",
-              maxWidth: "440px",
-            }}
-          >
+          <p className="text-secondary text-lg mb-10 max-w-md leading-relaxed">
             Structured courses, expert teachers, and a community that grows
             together. No more scattered WhatsApp groups.
           </p>
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+          <div className="flex gap-4 flex-wrap">
             <Link
               href="/signup"
-              style={{
-                background: "var(--accent)",
-                color: "#000",
-                padding: "0.85rem 2rem",
-                borderRadius: "8px",
-                textDecoration: "none",
-                fontWeight: 700,
-                fontSize: "1rem",
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-              }}
+              className="bg-accent text-black px-8 py-3 rounded-lg font-bold text-base flex items-center gap-2 hover:bg-accent/90 transition-colors"
             >
               Browse Courses <ArrowRight size={18} />
             </Link>
             <Link
               href="#courses"
-              style={{
-                border: "1px solid var(--border)",
-                color: "var(--text-primary)",
-                padding: "0.85rem 2rem",
-                borderRadius: "8px",
-                textDecoration: "none",
-                fontWeight: 500,
-                fontSize: "1rem",
-              }}
+              className="border border-border text-primary px-8 py-3 rounded-lg font-medium text-base hover:border-accent transition-colors"
             >
               View All Courses
             </Link>
           </div>
         </div>
 
-        <div
-          style={{
-            background: "var(--bg-card)",
-            border: "1px solid var(--border)",
-            borderRadius: "16px",
-            padding: "2rem",
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "1.5rem",
-          }}
-        >
+        <div className="bg-card border border-border rounded-2xl p-8 grid grid-cols-2 gap-4">
           {[
             {
-              icon: <Users size={24} color="var(--accent)" />,
+              icon: <Users size={24} className="text-accent" />,
               value: "215K+",
               label: "Community Members",
             },
             {
-              icon: <BookOpen size={24} color="var(--accent)" />,
-              value: courses?.length + "+",
+              icon: <BookOpen size={24} className="text-accent" />,
+              value: `${courses?.length ?? 0}+`,
               label: "Active Courses",
             },
             {
-              icon: <PlayCircle size={24} color="var(--accent)" />,
+              icon: <PlayCircle size={24} className="text-accent" />,
               value: "100%",
               label: "Video Lessons",
             },
             {
-              icon: <Star size={24} color="var(--accent)" />,
+              icon: <Star size={24} className="text-accent" />,
               value: "4.9",
               label: "Average Rating",
             },
           ].map((stat) => (
             <div
               key={stat.label}
-              style={{
-                background: "var(--bg-elevated)",
-                border: "1px solid var(--border)",
-                borderRadius: "12px",
-                padding: "1.25rem",
-              }}
+              className="bg-elevated border border-border rounded-xl p-5"
             >
               {stat.icon}
-              <div
-                style={{
-                  fontSize: "1.75rem",
-                  fontFamily: "Playfair Display, serif",
-                  fontWeight: 700,
-                  color: "var(--text-primary)",
-                  marginTop: "0.5rem",
-                }}
-              >
+              <div className="text-3xl font-display font-bold text-primary mt-2">
                 {stat.value}
               </div>
-              <div
-                style={{
-                  fontSize: "0.8rem",
-                  color: "var(--text-muted)",
-                  marginTop: "0.2rem",
-                }}
-              >
-                {stat.label}
-              </div>
+              <div className="text-xs text-muted mt-1">{stat.label}</div>
             </div>
           ))}
         </div>
       </section>
 
-      <section
-        id="courses"
-        style={{
-          maxWidth: "1100px",
-          margin: "0 auto",
-          padding: "4rem 2rem",
-        }}
-      >
-        <div style={{ marginBottom: "2.5rem" }}>
-          <h2
-            style={{
-              fontSize: "2rem",
-              fontWeight: 700,
-              color: "var(--text-primary)",
-              marginBottom: "0.5rem",
-            }}
-          >
+      <section id="courses" className="max-w-6xl mx-auto px-8 py-16">
+        <div className="mb-10">
+          <h2 className="text-3xl font-display font-bold text-primary mb-2">
             Available Courses
           </h2>
-          <p style={{ color: "var(--text-secondary)" }}>
+          <p className="text-secondary">
             Handpicked by expert teachers. One-time payment. Lifetime access.
           </p>
         </div>
 
         {!courses || courses.length === 0 ? (
-          <div
-            style={{
-              textAlign: "center",
-              padding: "4rem",
-              color: "var(--text-muted)",
-              border: "1px dashed var(--border)",
-              borderRadius: "12px",
-            }}
-          >
+          <div className="text-center py-16 text-muted border border-dashed border-border rounded-xl">
             Courses coming soon. Check back shortly.
           </div>
         ) : (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
-              gap: "1.5rem",
-            }}
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {courses.map((course: any) => (
               <Link
                 key={course.id}
                 href={`/courses/${course.slug}`}
-                style={{ textDecoration: "none" }}
+                className="group block no-underline"
               >
-                <div
-                  style={{
-                    background: "var(--bg-card)",
-                    border: "1px solid var(--border)",
-                    borderRadius: "12px",
-                    overflow: "hidden",
-                    transition: "border-color 0.2s, transform 0.2s",
-                    cursor: "pointer",
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.borderColor =
-                      "var(--accent)";
-                    (e.currentTarget as HTMLDivElement).style.transform =
-                      "translateY(-2px)";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.borderColor =
-                      "var(--border)";
-                    (e.currentTarget as HTMLDivElement).style.transform =
-                      "translateY(0)";
-                  }}
-                >
+                <div className="bg-card border border-border rounded-xl overflow-hidden transition-all duration-200 group-hover:border-accent group-hover:-translate-y-1">
                   <div
-                    style={{
-                      height: "180px",
-                      background: course.thumbnail_url
-                        ? `url(${course.thumbnail_url}) center/cover`
-                        : "var(--bg-elevated)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      borderBottom: "1px solid var(--border)",
-                    }}
+                    className="h-44 bg-elevated border-b border-border flex items-center justify-center"
+                    style={
+                      course.thumbnail_url
+                        ? {
+                            backgroundImage: `url(${course.thumbnail_url})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                          }
+                        : {}
+                    }
                   >
                     {!course.thumbnail_url && (
-                      <BookOpen size={40} color="var(--text-muted)" />
+                      <BookOpen size={40} className="text-muted" />
                     )}
                   </div>
-
-                  <div style={{ padding: "1.25rem" }}>
-                    <h3
-                      style={{
-                        fontSize: "1.05rem",
-                        fontWeight: 700,
-                        color: "var(--text-primary)",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
+                  <div className="p-5">
+                    <h3 className="text-base font-bold text-primary mb-2 leading-snug">
                       {course.title}
                     </h3>
-                    <p
-                      style={{
-                        fontSize: "0.85rem",
-                        color: "var(--text-secondary)",
-                        marginBottom: "1rem",
-                        display: "-webkit-box",
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: "vertical",
-                        overflow: "hidden",
-                      }}
-                    >
+                    <p className="text-sm text-secondary mb-4 line-clamp-2">
                       {course.description}
                     </p>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontSize: "1.15rem",
-                          fontWeight: 700,
-                          color: "var(--accent)",
-                        }}
-                      >
+                    <div className="flex items-center justify-between">
+                      <span className="text-lg font-bold text-accent">
                         ৳{course.price}
                       </span>
-                      <span
-                        style={{
-                          fontSize: "0.8rem",
-                          color: "var(--text-muted)",
-                        }}
-                      >
+                      <span className="text-xs text-muted">
                         {(course.teachers as any)?.name}
                       </span>
                     </div>
@@ -389,31 +174,11 @@ export default async function LandingPage() {
         )}
       </section>
 
-      <section
-        style={{
-          borderTop: "1px solid var(--border)",
-          padding: "5rem 2rem",
-          maxWidth: "1100px",
-          margin: "0 auto",
-        }}
-      >
-        <h2
-          style={{
-            fontSize: "2rem",
-            fontWeight: 700,
-            textAlign: "center",
-            marginBottom: "3rem",
-          }}
-        >
+      <section className="border-t border-border max-w-6xl mx-auto px-8 py-20">
+        <h2 className="text-3xl font-display font-bold text-center text-primary mb-12">
           Why Choose শিক্ষালয়?
         </h2>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "1.5rem",
-          }}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             {
               title: "Structured Learning",
@@ -430,29 +195,13 @@ export default async function LandingPage() {
           ].map((item) => (
             <div
               key={item.title}
-              style={{
-                background: "var(--bg-card)",
-                border: "1px solid var(--border)",
-                borderRadius: "12px",
-                padding: "1.75rem",
-              }}
+              className="bg-card border border-border rounded-xl p-7"
             >
-              <CheckCircle
-                size={24}
-                color="var(--green)"
-                style={{ marginBottom: "1rem" }}
-              />
-              <h3
-                style={{
-                  fontSize: "1.1rem",
-                  fontWeight: 700,
-                  marginBottom: "0.5rem",
-                  color: "var(--text-primary)",
-                }}
-              >
+              <CheckCircle size={24} className="text-green mb-4" />
+              <h3 className="text-lg font-bold text-primary mb-2">
                 {item.title}
               </h3>
-              <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>
+              <p className="text-secondary text-sm leading-relaxed">
                 {item.desc}
               </p>
             </div>
@@ -460,15 +209,7 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      <footer
-        style={{
-          borderTop: "1px solid var(--border)",
-          padding: "2rem",
-          textAlign: "center",
-          color: "var(--text-muted)",
-          fontSize: "0.85rem",
-        }}
-      >
+      <footer className="border-t border-border py-8 text-center text-muted text-sm">
         © {new Date().getFullYear()} শিক্ষালয় · Built for Bangladesh's learners
       </footer>
     </main>
