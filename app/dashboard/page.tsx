@@ -8,6 +8,7 @@ import {
   XCircle,
   PlayCircle,
 } from "lucide-react";
+import SignOutButton from "@/components/SignOutButton";
 
 export default async function DashboardPage({
   searchParams,
@@ -76,6 +77,7 @@ export default async function DashboardPage({
               Admin Panel
             </Link>
           )}
+          <SignOutButton />
         </div>
       </nav>
 
