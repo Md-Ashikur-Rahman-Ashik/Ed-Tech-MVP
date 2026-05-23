@@ -38,7 +38,7 @@ export default async function LandingPage() {
           </Link>
           <Link
             href="/signup"
-            className="bg-accent text-black px-5 py-2 rounded-lg text-sm font-bold hover:bg-accent/90 transition-colors"
+            className="bg-accent text-black px-4 py-2 rounded-lg text-sm font-bold hover:bg-accent/90 transition-colors whitespace-nowrap"
           >
             Get Started
           </Link>
@@ -112,7 +112,7 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      <section id="courses" className="max-w-6xl mx-auto px-8 py-16">
+      <section id="courses" className="max-w-6xl mx-auto px-8 py-8 lg:py-16">
         <div className="mb-10">
           <h2 className="text-3xl font-display font-bold text-primary mb-2">
             Available Courses
@@ -136,7 +136,7 @@ export default async function LandingPage() {
               >
                 <div className="bg-card border border-border rounded-xl overflow-hidden transition-all duration-200 group-hover:border-accent group-hover:-translate-y-1">
                   <div
-                    className="h-44 bg-elevated border-b border-border flex items-center justify-center"
+                    className="h-32 lg:h-44 bg-elevated border-b border-border flex items-center justify-center"
                     style={
                       course.thumbnail_url
                         ? {
