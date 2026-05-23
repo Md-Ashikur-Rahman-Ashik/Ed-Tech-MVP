@@ -57,7 +57,6 @@ export default async function AdminPage() {
 
   return (
     <div className="min-h-screen bg-bg">
-      {/* NAV */}
       <nav className="border-b border-border bg-card px-8 h-16 flex items-center justify-between sticky top-0 z-50">
         <div className="flex items-center gap-2">
           <BookOpen size={20} className="text-accent" />
@@ -71,6 +70,21 @@ export default async function AdminPage() {
           ← Back to Dashboard
         </Link>
       </nav>
+
+      <div className="flex gap-3 mb-10">
+        <Link
+          href="/admin/courses"
+          className="bg-accent text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-accent-hover transition-colors no-underline"
+        >
+          Manage Courses
+        </Link>
+        <Link
+          href="/admin/courses/new"
+          className="bg-elevated border border-border text-primary px-5 py-2.5 rounded-lg text-sm font-semibold hover:border-accent transition-colors no-underline"
+        >
+          + New Course
+        </Link>
+      </div>
 
       <div className="max-w-5xl mx-auto px-4 py-10">
         <div className="grid grid-cols-3 gap-4 mb-10">
