@@ -3,6 +3,51 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { BookOpen, PlayCircle, FileText, ArrowLeft, Lock } from "lucide-react";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const supabase = await createClient();
+
+  const { data: course } = await supabase
+    .from("courses")
+    .select("title, description, thumbnail_url, price, teachers(name)")
+    .eq("slug", slug)
+    .eq("is_published", true)
+    .single();
+
+  if (!course) {
+    return {
+      title: "Course Not Found",
+    };
+  }
+
+  const teacher = (course.teachers as any)?.name;
+  const title = `${course.title} — ${teacher}`;
+  const description =
+    course.description ||
+    `Join ${course.title} by ${teacher}. One-time payment of ৳${course.price}. Lifetime access.`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      ...(course.thumbnail_url && { images: [{ url: course.thumbnail_url }] }),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      ...(course.thumbnail_url && { images: [course.thumbnail_url] }),
+    },
+  };
+}
+
 export default async function CourseDetailPage({
   params,
 }: {
