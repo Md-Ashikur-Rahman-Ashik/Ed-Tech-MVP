@@ -1,14 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import {
-  BookOpen,
-  PlayCircle,
-  FileText,
-  Clock,
-  ArrowLeft,
-  Lock,
-} from "lucide-react";
+import { BookOpen, PlayCircle, FileText, ArrowLeft, Lock } from "lucide-react";
 
 export default async function CourseDetailPage({
   params,
@@ -36,231 +29,93 @@ export default async function CourseDetailPage({
   const teacher = course.teachers as any;
 
   return (
-    <main style={{ background: "var(--bg)", minHeight: "100vh" }}>
-      <nav
-        style={{
-          borderBottom: "1px solid var(--border)",
-          padding: "0 2rem",
-          height: "64px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          position: "sticky",
-          top: 0,
-          background: "var(--bg)",
-          zIndex: 100,
-        }}
-      >
+    <main className="bg-bg min-h-screen">
+      <nav className="border-b border-border px-8 h-16 flex items-center justify-between sticky top-0 bg-bg z-50">
         <Link
           href="/"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            textDecoration: "none",
-            color: "var(--text-secondary)",
-            fontSize: "0.9rem",
-          }}
+          className="flex items-center gap-2 text-secondary text-sm hover:text-primary transition-colors no-underline"
         >
           <ArrowLeft size={16} /> Back to courses
         </Link>
-        <div style={{ display: "flex", gap: "1rem" }}>
+        <div className="flex items-center gap-4">
           <Link
             href="/login"
-            style={{
-              color: "var(--text-secondary)",
-              textDecoration: "none",
-              fontSize: "0.9rem",
-            }}
+            className="text-secondary text-sm hover:text-primary transition-colors"
           >
             Login
           </Link>
           <Link
             href="/signup"
-            style={{
-              background: "var(--accent)",
-              color: "#000",
-              padding: "0.5rem 1.25rem",
-              borderRadius: "6px",
-              textDecoration: "none",
-              fontSize: "0.9rem",
-              fontWeight: 600,
-            }}
+            className="bg-accent text-black px-5 py-2 rounded-lg text-sm font-bold hover:bg-accent/90 transition-colors"
           >
             Enroll Now
           </Link>
         </div>
       </nav>
 
-      <div
-        style={{ maxWidth: "1100px", margin: "0 auto", padding: "3rem 2rem" }}
-      >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 340px",
-            gap: "3rem",
-            alignItems: "start",
-          }}
-        >
+      <div className="max-w-6xl mx-auto px-8 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-12 items-start">
           <div>
-            <h1
-              style={{
-                fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
-                fontWeight: 900,
-                color: "var(--text-primary)",
-                marginBottom: "1rem",
-                lineHeight: 1.2,
-              }}
-            >
+            <h1 className="text-4xl lg:text-5xl font-display font-black text-primary mb-4 leading-tight">
               {course.title}
             </h1>
-            <p
-              style={{
-                color: "var(--text-secondary)",
-                fontSize: "1rem",
-                lineHeight: 1.7,
-                marginBottom: "2rem",
-              }}
-            >
+            <p className="text-secondary text-base leading-relaxed mb-8">
               {course.description}
             </p>
-
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "1rem",
-                background: "var(--bg-card)",
-                border: "1px solid var(--border)",
-                borderRadius: "12px",
-                padding: "1.25rem",
-                marginBottom: "2.5rem",
-              }}
-            >
+            <div className="flex items-center gap-4 bg-card border border-border rounded-xl p-5 mb-10">
               <div
-                style={{
-                  width: "52px",
-                  height: "52px",
-                  borderRadius: "50%",
-                  background: teacher?.photo_url
-                    ? `url(${teacher.photo_url}) center/cover`
-                    : "var(--bg-elevated)",
-                  border: "2px solid var(--accent)",
-                  flexShrink: 0,
-                }}
+                className="w-14 h-14 rounded-full border-2 border-accent flex-shrink-0 bg-elevated"
+                style={
+                  teacher?.photo_url
+                    ? {
+                        backgroundImage: `url(${teacher.photo_url})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }
+                    : {}
+                }
               />
               <div>
-                <div
-                  style={{
-                    fontSize: "0.75rem",
-                    color: "var(--text-muted)",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.08em",
-                    marginBottom: "0.2rem",
-                  }}
-                >
+                <div className="text-xs text-muted uppercase tracking-widest mb-0.5">
                   Your Teacher
                 </div>
-                <div style={{ fontWeight: 700, color: "var(--text-primary)" }}>
-                  {teacher?.name}
-                </div>
+                <div className="font-bold text-primary">{teacher?.name}</div>
                 {teacher?.bio && (
-                  <div
-                    style={{
-                      fontSize: "0.85rem",
-                      color: "var(--text-secondary)",
-                      marginTop: "0.2rem",
-                    }}
-                  >
+                  <div className="text-sm text-secondary mt-0.5">
                     {teacher.bio}
                   </div>
                 )}
               </div>
             </div>
 
-            <h2
-              style={{
-                fontSize: "1.25rem",
-                fontWeight: 700,
-                marginBottom: "1rem",
-                color: "var(--text-primary)",
-              }}
-            >
+            <h2 className="text-xl font-display font-bold text-primary mb-4">
               Course Content ({lessons?.length || 0} lessons)
             </h2>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.5rem",
-              }}
-            >
+            <div className="flex flex-col gap-2">
               {lessons?.map((lesson, index) => (
                 <div
                   key={lesson.id}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "1rem",
-                    padding: "0.9rem 1rem",
-                    background: "var(--bg-card)",
-                    border: "1px solid var(--border)",
-                    borderRadius: "8px",
-                  }}
+                  className="flex items-center gap-4 px-4 py-3 bg-card border border-border rounded-lg"
                 >
-                  <span
-                    style={{
-                      fontSize: "0.8rem",
-                      color: "var(--text-muted)",
-                      fontWeight: 600,
-                      minWidth: "24px",
-                    }}
-                  >
+                  <span className="text-xs text-muted font-semibold w-6">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <div style={{ flex: 1 }}>
-                    <div
-                      style={{
-                        fontSize: "0.9rem",
-                        color: lesson.is_free_preview
-                          ? "var(--text-primary)"
-                          : "var(--text-secondary)",
-                        fontWeight: 500,
-                      }}
-                    >
-                      {lesson.title}
-                    </div>
+                  <div className="flex-1 text-sm font-medium text-secondary">
+                    {lesson.title}
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "0.5rem",
-                      alignItems: "center",
-                    }}
-                  >
+                  <div className="flex items-center gap-2">
                     {lesson.youtube_url && (
-                      <PlayCircle size={15} color="var(--text-muted)" />
+                      <PlayCircle size={14} className="text-muted" />
                     )}
                     {lesson.pdf_url && (
-                      <FileText size={15} color="var(--text-muted)" />
+                      <FileText size={14} className="text-muted" />
                     )}
                     {lesson.is_free_preview ? (
-                      <span
-                        style={{
-                          fontSize: "0.7rem",
-                          background: "var(--green-light)",
-                          color: "var(--green)",
-                          border: "1px solid var(--green)",
-                          padding: "0.15rem 0.5rem",
-                          borderRadius: "100px",
-                          fontWeight: 600,
-                        }}
-                      >
-                        Free Preview
+                      <span className="text-xs bg-green/10 text-green border border-green px-2 py-0.5 rounded-full font-semibold">
+                        Free
                       </span>
                     ) : (
-                      <Lock size={13} color="var(--text-muted)" />
+                      <Lock size={12} className="text-muted" />
                     )}
                   </div>
                 </div>
@@ -268,69 +123,32 @@ export default async function CourseDetailPage({
             </div>
           </div>
 
-          <div style={{ position: "sticky", top: "80px" }}>
-            <div
-              style={{
-                background: "var(--bg-card)",
-                border: "1px solid var(--border)",
-                borderRadius: "16px",
-                overflow: "hidden",
-              }}
-            >
+          <div className="sticky top-20">
+            <div className="bg-card border border-border rounded-2xl overflow-hidden">
               {course.thumbnail_url && (
                 <div
+                  className="h-44 border-b border-border"
                   style={{
-                    height: "180px",
-                    background: `url(${course.thumbnail_url}) center/cover`,
-                    borderBottom: "1px solid var(--border)",
+                    backgroundImage: `url(${course.thumbnail_url})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
                   }}
                 />
               )}
-              <div style={{ padding: "1.5rem" }}>
-                <div
-                  style={{
-                    fontSize: "2rem",
-                    fontWeight: 900,
-                    color: "var(--accent)",
-                    fontFamily: "Playfair Display, serif",
-                    marginBottom: "0.25rem",
-                  }}
-                >
+              <div className="p-6">
+                <div className="text-4xl font-display font-black text-accent mb-1">
                   ৳{course.price}
                 </div>
-                <div
-                  style={{
-                    fontSize: "0.8rem",
-                    color: "var(--text-muted)",
-                    marginBottom: "1.5rem",
-                  }}
-                >
+                <div className="text-xs text-muted mb-6">
                   One-time payment · Lifetime access
                 </div>
                 <Link
                   href={`/enroll/${course.slug}`}
-                  style={{
-                    display: "block",
-                    background: "var(--accent)",
-                    color: "#000",
-                    textAlign: "center",
-                    padding: "0.9rem",
-                    borderRadius: "8px",
-                    fontWeight: 700,
-                    textDecoration: "none",
-                    fontSize: "1rem",
-                    marginBottom: "1rem",
-                  }}
+                  className="block w-full bg-accent text-black text-center py-3 rounded-lg font-bold text-base hover:bg-accent/90 transition-colors mb-4 no-underline"
                 >
                   Enroll Now
                 </Link>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "0.5rem",
-                  }}
-                >
+                <div className="flex flex-col gap-2">
                   {[
                     `${lessons?.length || 0} lessons`,
                     "Lifetime access",
@@ -339,15 +157,9 @@ export default async function CourseDetailPage({
                   ].map((item) => (
                     <div
                       key={item}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.5rem",
-                        fontSize: "0.85rem",
-                        color: "var(--text-secondary)",
-                      }}
+                      className="flex items-center gap-2 text-sm text-secondary"
                     >
-                      <span style={{ color: "var(--green)" }}>✓</span> {item}
+                      <span className="text-green">✓</span> {item}
                     </div>
                   ))}
                 </div>
