@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { BookOpen } from "lucide-react";
 import AdminActions from "./AdminActions";
+import SignOutButton from "@/components/SignOutButton";
 
 export default async function AdminPage() {
   const supabase = await createClient();
@@ -69,6 +70,7 @@ export default async function AdminPage() {
         >
           ← Back to Dashboard
         </Link>
+        <SignOutButton />
       </nav>
 
       <div className="flex gap-3 mb-10">
