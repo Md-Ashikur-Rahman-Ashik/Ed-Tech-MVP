@@ -25,17 +25,35 @@ export default async function AdminPage() {
     .from("payments")
     .select(
       `
-      id, amount, bkash_number, transaction_id, status, submitted_at,
+      id, amount, bkash_number, transaction_id, status, submitted_at, user_id,
       enrollments ( id, status ),
-      courses ( title, slug ),
-      profiles!payments_user_id_fkey ( full_name )
+      courses ( title, slug )
     `,
     )
     .order("submitted_at", { ascending: false });
 
-  const pending = payments?.filter((p) => p.status === "pending") || [];
-  const verified = payments?.filter((p) => p.status === "verified") || [];
-  const rejected = payments?.filter((p) => p.status === "rejected") || [];
+  const userIds = [...new Set(payments?.map((p) => p.user_id) || [])];
+  const { data: profilesData } = await supabase
+    .from("profiles")
+    .select("id, full_name")
+    .in(
+      "id",
+      userIds.length > 0 ? userIds : ["00000000-0000-0000-0000-000000000000"],
+    );
+
+  const profileMap = Object.fromEntries(
+    profilesData?.map((p) => [p.id, p.full_name]) || [],
+  );
+
+  const paymentsWithNames =
+    payments?.map((p) => ({
+      ...p,
+      student_name: profileMap[p.user_id] || "Unknown Student",
+    })) || [];
+
+  const pending = paymentsWithNames.filter((p) => p.status === "pending");
+  const verified = paymentsWithNames.filter((p) => p.status === "verified");
+  const rejected = paymentsWithNames.filter((p) => p.status === "rejected");
 
   return (
     <div className="min-h-screen bg-bg">
@@ -105,7 +123,7 @@ export default async function AdminPage() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
                     <div className="font-semibold text-primary mb-0.5">
-                      {payment.profiles?.full_name || "Unknown Student"}
+                      {payment.student_name}
                     </div>
                     <div className="text-sm text-secondary mb-2">
                       {payment.courses?.title}
@@ -162,7 +180,7 @@ export default async function AdminPage() {
                 >
                   <div>
                     <div className="font-semibold text-primary text-sm">
-                      {payment.profiles?.full_name}
+                      {payment.student_name}
                     </div>
                     <div className="text-xs text-muted">
                       {payment.courses?.title} · ৳{payment.amount}
