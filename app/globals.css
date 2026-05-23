@@ -3,20 +3,20 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-:root {
-  --bg: #0f0e0b;
-  --bg-card: #1a1915;
-  --bg-elevated: #222118;
-  --border: #2e2c25;
-  --text-primary: #f0ead6;
-  --text-secondary: #9c9578;
-  --text-muted: #5a5642;
-  --accent: #c8922a;
-  --accent-hover: #e0a830;
-  --accent-light: #c8922a18;
-  --green: #4a7c59;
-  --green-light: #4a7c5920;
-  --danger: #c0392b;
+@theme {
+  --color-bg: #0f0e0b;
+  --color-card: #1a1915;
+  --color-elevated: #222118;
+  --color-border: #2e2c25;
+  --color-primary: #f0ead6;
+  --color-secondary: #9c9578;
+  --color-muted: #5a5642;
+  --color-accent: #c8922a;
+  --color-green: #4a7c59;
+  --color-danger: #c0392b;
+
+  --font-display: "Playfair Display", serif;
+  --font-body: "DM Sans", sans-serif;
 }
 
 * {
@@ -26,9 +26,9 @@
 }
 
 body {
-  background: var(--bg);
-  color: var(--text-primary);
-  font-family: "DM Sans", sans-serif;
+  background: var(--color-bg);
+  color: var(--color-primary);
+  font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -38,16 +38,12 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: "Playfair Display", serif;
+  font-family: var(--font-display);
   line-height: 1.2;
 }
 
-.accent {
-  color: var(--accent);
-}
-
 ::selection {
-  background: var(--accent);
+  background: var(--color-accent);
   color: #000;
 }
 
@@ -55,9 +51,9 @@ h4 {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg);
+  background: var(--color-bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
+  background: var(--color-border);
   border-radius: 3px;
 }
